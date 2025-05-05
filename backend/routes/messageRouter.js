@@ -4,8 +4,8 @@ import { getMessages, getUsersForSidebar, sendMessage } from '../controllers/mes
 
 const messageRouter = express.Router()
 
-messageRouter.post('/users',authUser, getUsersForSidebar)
-messageRouter.post('/:id',authUser, getMessages)
+messageRouter.get('/users',authUser, getUsersForSidebar)
+messageRouter.get('/:id',authUser, getMessages)
 messageRouter.post('/send/:id',authUser, sendMessage)
 
 

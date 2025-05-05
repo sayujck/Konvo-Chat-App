@@ -1,47 +1,47 @@
-import React from 'react'
-import { assests } from '../assets/assets'
-import { Link } from 'react-router-dom'
-import { LogOut, Settings, User } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/useAuthStore";
+import { LogOut, MessageSquare, Settings, User } from "lucide-react";
 
 const Navbar = () => {
-    return (
-        <div>Navbar</div>
-        // <header className="bg-base-100 border-b border-base-300 fixed w-full top-0 z-40 backdrop-blur-lg bg-base-100/80">
-        //     <div className="container mx-auto px-5 h-16">
+  const { logout, authUser } = useAuthStore();
+  const navigate = useNavigate()
 
-        //         <div className="flex items-center justify-between h-full">
-        //             <div className="flex items-center gap-8">
-        //                 <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-all">
-        //                     <div className="size-9 rounded-lg bg-primary/10 flex items-center justify-center">
-        //                         <img className='w-8 m-5' src={assests.logo} alt="" />
-        //                     </div>
-        //                     <h1 className="text-lg md:text-2xl font-bold text-amber-300">Konvo</h1>
-        //                 </Link>
-        //             </div>
-        //             <div className="flex items-center gap-5 cursor-pointer">
-        //                 <div className='flex items-center gap-2'>
-        //                     <Settings className="w-4 h-4" />
-        //                     <span className="hidden sm:inline">Settings</span>
-        //                 </div>
+  return (
+    <header className="bg-base-100 border-b border-base-300 fixed w-full top-0 z-40 backdrop-blur-lg">
+      <div className="container mx-auto px-4 h-16">
+        <div className="flex items-center justify-between h-full">
+          <div className="flex items-center gap-8">
+            <Link to="/" className="flex items-center gap-2.5 hover:opacity-80 transition-all">
+              <div className="size-9 rounded-lg bg-primary/10 flex items-center justify-center">
+                <MessageSquare className="w-5 h-5 text-primary" />
+              </div>
+              <h1 className="text-lg font-bold">Chatty</h1>
+            </Link>
+          </div>
 
-        //                 <div className='flex items-center gap-2 cursor-pointer'>
-        //                     <User className="size-5" />
-        //                     <span className="hidden sm:inline">Profile</span>
-        //                 </div>
+          <div className="flex items-center gap-5">
+            <button  onClick={()=>navigate('/settings')} className="flex gap-1 items-center">
+              <Settings className="size-5" />
+              <span className="hidden sm:inline">Settings</span>
+            </button>
 
-        //                 <div>
-        //                     <button className="flex gap-2 items-center cursor-pointer">
-        //                         <LogOut className="size-5" />
-        //                         <span className="hidden sm:inline">Logout</span>
-        //                     </button>
-        //                 </div>
+            {authUser && (
+              <>
+                <button onClick={()=>navigate('/profile')} className="flex gap-1 items-center">
+                  <User className="size-5" />
+                  <span className="hidden sm:inline">Profile</span>
+                </button>
 
-        //             </div>
-
-        //         </div>
-        //     </div>
-        // </header>
-    )
-}
-
-export default Navbar
+                <button className="flex gap-2 items-center" onClick={logout}>
+                  <LogOut className="size-5" />
+                  <span className="hidden sm:inline">Logout</span>
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+};
+export default Navbar;
